@@ -9,6 +9,7 @@ int main() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawText("It works!", 20, 20, 20, BLACK);
+    DrawText("It works!", 20, 40, 20, BLACK);
     EndDrawing();
   }
   CloseWindow();
