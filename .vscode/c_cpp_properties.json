@@ -11,9 +11,8 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerArgs": [
-                "-L${workspaceFolder}/lib"
-            ]
+            "compilerArgs": [],
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4
