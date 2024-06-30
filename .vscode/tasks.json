@@ -8,6 +8,7 @@
             "command": "tcc/tcc.exe",
             "args": [
                 "-Iinclude/",
+                "-I./",
                 "-Llib/",
                 "-lraylib",
                 "-Wall",

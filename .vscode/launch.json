@@ -11,7 +11,7 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "console": "externalTerminal",
+            "console": "internalConsole",
             "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
             "preLaunchTask": "compile",
         }

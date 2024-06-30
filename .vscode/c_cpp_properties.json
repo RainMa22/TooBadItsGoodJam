@@ -13,8 +13,7 @@
             ],
             "compilerArgs": [
                 "-L${workspaceFolder}/lib"
-            ],
-            "compilerPath": "${workspaceFolder}/tcc/tcc"
+            ]
         }
     ],
     "version": 4
