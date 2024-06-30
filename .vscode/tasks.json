@@ -3,6 +3,23 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
+        // {
+        //     "label": "compile",
+        //     "command": "tcc/tcc.exe",
+        //     "args": [
+        //         "-Iinclude/",
+        //         "-I./",
+        //         "-Llib/",
+        //         "-lraylib",
+        //         "-Wall",
+        //         "-Werror",
+        //         "-Wunsupported",
+        //         "-Wwrite-strings",
+        //         "${file}",
+        //         "-o",
+        //         "${fileDirname}/${fileBasenameNoExtension}.exe"
+        //     ],
+        // },
         {
             "label": "compile",
             "command": "tcc/tcc.exe",
@@ -15,9 +32,9 @@
                 "-Werror",
                 "-Wunsupported",
                 "-Wwrite-strings",
-                "${file}",
+                "Main.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe"
+                "Main.exe"
             ],
         },
     ]

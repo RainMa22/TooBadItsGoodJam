@@ -1,3 +1,7 @@
 {
-    "C_Cpp.default.compilerPath": "${workspaceFolder}/tcc/tcc"
+    "C_Cpp.default.compilerPath": "${workspaceFolder}/tcc/tcc",
+    "files.associations": {
+        "button.h": "c",
+        "raymath.h": "c"
+    }
 }
