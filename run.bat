@@ -1,0 +1,1 @@
+.\tcc\tcc -Iinclude/ -Llib/ -lraylib -Isyslib/ -Wall -run test.c

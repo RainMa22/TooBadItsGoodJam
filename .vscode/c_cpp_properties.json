@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "tcc",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerArgs": [
+                "-L${workspaceFolder}/lib"
+            ],
+            "compilerPath": "${workspaceFolder}/tcc/tcc"
+        }
+    ],
+    "version": 4
+}
