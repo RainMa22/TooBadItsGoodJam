@@ -4,15 +4,19 @@
             "name": "tcc",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include/*"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerArgs": [],
-            "intelliSenseMode": "windows-gcc-x64"
+            "compilerArgs": [
+                "-isystem"
+            ],
+            "intelliSenseMode": "windows-gcc-x64",
+            "cStandard": "c99",
+            "compilerPath": ""
         }
     ],
     "version": 4

@@ -3,6 +3,9 @@
     "files.associations": {
         "button.h": "c",
         "raymath.h": "c",
-        "raylib.h": "c"
-    }
+        "raylib.h": "c",
+        "drawutils.h": "c",
+        "clickstats.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabledIfIncludesResolve"
 }
