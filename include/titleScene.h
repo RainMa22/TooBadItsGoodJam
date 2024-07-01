@@ -50,11 +50,11 @@ int TitleSceneProcedure()
     {
         if (CheckCollisionRecs(getButtonRect(startbtn), MouseRec))
         {
-            return switchTo(GameScene);
+            return GameScene;
         }
         if (CheckCollisionRecs(getButtonRect(settingbtn), MouseRec))
         {
-            return switchTo(SettingScene);
+            return SettingScene;
         }
     }
     EndDrawing();

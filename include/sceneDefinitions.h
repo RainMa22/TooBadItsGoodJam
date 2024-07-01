@@ -8,6 +8,8 @@
 #include "drawUtils.h"
 
 #define GAMENAME "BRAINROT TYCOON"
+
+#define InactiveScene -1
 #define TitleScene 0
 #define GameScene 1
 #define SettingScene 2
