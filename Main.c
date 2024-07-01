@@ -1,27 +1,27 @@
 #include "sceneDefinitions.h" //mouseCollisionSize also here
 #include "titleScene.h"
+#include "settingScene.h"
 #include "clickStats.h"
 
 int screenWidth = 800;
 int screenHeight = 600;
-int sceneID = InactiveScene;
 // main gameloop
 int main()
 {
   InitWindow(screenWidth, screenHeight, GAMENAME);
   SetTargetFPS(60);
 
-  int sceneID = switchTo(TitleScene);
+  sceneID = TitleSceneInit();
 
   while (!WindowShouldClose())
   {
     switch (sceneID)
     {
     case TitleScene:
-      switchTo(TitleSceneProcedure());
+      sceneID = TitleSceneProcedure();
       break;
     case GameScene:
-      switchTo(GameSceneProcedure());
+      sceneID = GameSceneProcedure();
       break;
     default:
       break;
@@ -33,24 +33,24 @@ int main()
 
 // EFFECTS: Calls the init function of the switch-to scene and then returns the sceneID.
 //          if the scene to be switched, do not call the init function
-int switchTo(int scene)
-{
-  if (sceneID == scene)
-    return scene;
+// int switchTo(int scene)
+// {
+//   if (sceneID == scene)
+//     return scene;
 
-  switch (scene)
-  {
-  case TitleScene:
-    TitleSceneInit();
-    break;
-  case GameScene:
-    GameSceneInit();
-    break;
-  default:
-    break;
-  }
-  return scene;
-}
+//   switch (scene)
+//   {
+//   case TitleScene:
+//     TitleSceneInit();
+//     break;
+//   case GameScene:
+//     GameSceneInit();
+//     break;
+//   default:
+//     break;
+//   }
+//   return scene;
+// }
 
 // ----------
 // GAME SCENE
@@ -61,7 +61,7 @@ ClickStats clickStats;
 // Input logic
 bool leftClickPressed = false;
 
-void GameSceneInit()
+int GameSceneInit()
 {
   // printf("Initalising game scene...");
   clickStats = newClickStats(); // A new click stats instance.
@@ -73,10 +73,16 @@ void GameSceneInit()
   // printf(clickStats.currentClicks);
   // printf("lifetime");
   // printf(clickStats.lifetimeClicks);
+  return GameScene;
 }
 
 int GameSceneProcedure()
 {
+  // failsafe: avoid stupidity
+  if (sceneID != GameScene)
+  {
+    GameSceneInit();
+  }
   int titleSize = 36;
   BeginDrawing();
   ClearBackground(RAYWHITE);

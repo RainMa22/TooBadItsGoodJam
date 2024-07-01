@@ -5,7 +5,9 @@
         "raymath.h": "c",
         "raylib.h": "c",
         "drawutils.h": "c",
-        "clickstats.h": "c"
+        "clickstats.h": "c",
+        "scenedefinitions.h": "c",
+        "titlescene.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabledIfIncludesResolve"
 }
