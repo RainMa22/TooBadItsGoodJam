@@ -5,7 +5,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-typedef struct
+typedef struct Button
 {
     int x;
     int y;
