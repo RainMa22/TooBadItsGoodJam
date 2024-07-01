@@ -23,6 +23,9 @@ int main()
     case GameScene:
       sceneID = GameSceneProcedure();
       break;
+    case SettingScene:
+      sceneID = SettingSceneProcedure();
+      break;
     default:
       break;
     }

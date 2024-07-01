@@ -51,6 +51,7 @@ int TitleSceneProcedure()
 
     // draw buttons
     drawButton(startbtn, MouseRec);
+    drawButton(settingbtn,MouseRec);
 
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     {

@@ -20,7 +20,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "console": "internalConsole",
             "program": "Main.exe",
