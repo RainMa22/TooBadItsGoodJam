@@ -1,16 +1,19 @@
-#include "sceneDefinitions.h"
+#include "settingsBox.h"
 
 typedef struct settingSceneData
 {
     int titleSize;
-    // TODO
+    SettingsBox settingsBox;
 } settingSceneData;
 
 settingSceneData ssd;
 int SettingSceneInit()
 {
     int titleSize = 32;
-    ssd = (settingSceneData){titleSize};
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
+    SettingsBox box = (SettingsBox){1,GRAY,(Rectangle){screenWidth / 16, screenHeight / 10 * 2, screenWidth * 14 / 16, screenHeight / 10 * 7}};
+    ssd = (settingSceneData){titleSize, box};
     // TODO
     return SettingScene;
 }
@@ -29,7 +32,7 @@ int SettingSceneProcedure()
     int screenHeight = GetScreenHeight();
     int titleSize = ssd.titleSize;
     DrawTextCentered("SETTINGS", screenWidth / 2, screenHeight / 10, titleSize, DARKGRAY);
-    DrawRectangleLines(screenWidth / 16, screenHeight / 10 * 2, screenWidth * 14 / 16, screenHeight / 10 * 7, GRAY);
+    drawSettingsBox(ssd.settingsBox);
 
     // TODO
     EndDrawing();
