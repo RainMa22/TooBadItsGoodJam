@@ -12,7 +12,8 @@ int SettingSceneInit()
     int titleSize = 32;
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
-    SettingsBox box = (SettingsBox){1,GRAY,(Rectangle){screenWidth / 16, screenHeight / 10 * 2, screenWidth * 14 / 16, screenHeight / 10 * 7}};
+    SettingsBox box = newSettingsBox((Rectangle){screenWidth / 16, screenHeight / 10 * 2, screenWidth * 14 / 16, screenHeight / 10 * 7},
+                                     1, GRAY);
     ssd = (settingSceneData){titleSize, box};
     // TODO
     return SettingScene;

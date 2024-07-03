@@ -1,5 +1,6 @@
-#include "raylib.h"
-#include "raymath.h"
+
+#include "sceneDefinitions.h"
+#include "drawUtils.h"
 
 //include guard to avoid future pain
 #ifndef BUTTON_H
@@ -37,14 +38,15 @@ Button newButton(int x, int y, int sizeX, int SizeY, int outlineSize, int textSi
         text,
         textColor};
 }
-// EFFECTS: draws the given button, and Mouse Position and returns the Button
+// EFFECTS: draws the given button and returns the Button
 //          if mouse hovers over the button, flip the color so the text and outline color are the body color, and the body color is the outline color
-Button drawButton(Button btn, Rectangle mouseRec)
+Button drawButton(Button btn)
 {
     Rectangle buttonRec = getButtonRect(btn);
     Color outline = btn.outline;
     Color textColor = btn.textColor;
     Color body = btn.body;
+    Rectangle mouseRec = getMouseRect();
 
     if (CheckCollisionRecs(buttonRec, mouseRec))
     {

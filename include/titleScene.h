@@ -41,7 +41,7 @@ int TitleSceneProcedure()
     int screenHeight = GetScreenHeight();
     Button startbtn = tsd.startbtn;
     Button settingbtn = tsd.settingsbtn;
-    Rectangle MouseRec = {GetMouseX(), GetMouseY(), mouseCollisionSize, mouseCollisionSize};
+    Rectangle MouseRec = getMouseRect();
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -50,8 +50,8 @@ int TitleSceneProcedure()
     DrawTextCenteredEx(GetFontDefault(), GAMENAME, screenWidth / 2, screenHeight / 4, titleSize, 5, DARKGRAY);
 
     // draw buttons
-    drawButton(startbtn, MouseRec);
-    drawButton(settingbtn,MouseRec);
+    drawButton(startbtn);
+    drawButton(settingbtn);
 
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     {

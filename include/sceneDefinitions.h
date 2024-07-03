@@ -4,8 +4,7 @@
 #define SCENEDEFINITION_H
 
 #include "raylib.h"
-#include "button.h"
-#include "drawUtils.h"
+#include "raymath.h"
 
 #define GAMENAME "BRAINROT TYCOON"
 
@@ -16,7 +15,7 @@
 int sceneID = InactiveScene;
 
 //the collision box of mouse needs to have a size
-#define mouseCollisionSize 1
+const char mouseCollisionSize = 1;
 
 int TitleSceneInit(void);
 int TitleSceneProcedure(void);
@@ -24,5 +23,9 @@ int GameSceneInit(void);
 int GameSceneProcedure(void);
 int SettingSceneInit(void);
 int SettingSceneProcedure(void);
+
+
+#include "drawUtils.h"
+#include "button.h"
 
 #endif //SCENEDEFINITION_H
