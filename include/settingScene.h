@@ -33,7 +33,7 @@ int SettingSceneProcedure()
     int screenHeight = GetScreenHeight();
     int titleSize = ssd.titleSize;
     DrawTextCentered("SETTINGS", screenWidth / 2, screenHeight / 10, titleSize, DARKGRAY);
-    drawSettingsBox(ssd.settingsBox);
+    drawSettingsBox(&(ssd.settingsBox));
 
     // TODO
     EndDrawing();

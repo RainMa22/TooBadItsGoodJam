@@ -33,13 +33,13 @@ SettingsBox newSettingsBox(Rectangle bounds, int thickness, Color lineColor)
     return (SettingsBox){bounds, thickness, lineColor, volume, narration, yapVol};
 }
 
-void drawSettingsBox(SettingsBox self)
+void drawSettingsBox(SettingsBox *self)
 {
-    DrawRectangleLinesEx(self.bounds, self.thickness, self.lineColor);
-    BeginScissorMode(self.bounds.x, self.bounds.y, self.bounds.width, self.bounds.height);
-    drawDragbar(self.volume);
-    drawDragbar(self.narration);
-    drawDragbar(self.yapVolume);
+    DrawRectangleLinesEx(self->bounds, self->thickness, self->lineColor);
+    BeginScissorMode(self->bounds.x, self->bounds.y, self->bounds.width, self->bounds.height);
+    drawDragbar(&(self->volume));
+    drawDragbar(&(self->narration));
+    drawDragbar(&(self->yapVolume));
     EndScissorMode();
 };
 #endif // SETTINGSBOX_H

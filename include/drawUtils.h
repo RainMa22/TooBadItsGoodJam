@@ -20,6 +20,8 @@ Vector2 relativeToAbsolute(Vector2 parent, Vector2 child)
     return (Vector2){parent.x + child.x, parent.y + child.y};
 }
 
+
+
 Rectangle getMouseRect()
 {
     return (Rectangle){GetMouseX(), GetMouseY(), mouseCollisionSize, mouseCollisionSize};
