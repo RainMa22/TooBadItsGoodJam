@@ -30,7 +30,7 @@
                 "-lraylib",
                 "-Wall",
                 "-Werror",
-                "-Wunsupported",
+                // "-Wunsupported",
                 "-Wwrite-strings",
                 "Main.c",
                 "-o",

@@ -22,7 +22,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "program": "Main.exe",
             "preLaunchTask": "compile",
         },
