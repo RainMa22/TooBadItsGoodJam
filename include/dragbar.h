@@ -1,5 +1,4 @@
 #include "sceneDefinitions.h"
-#include <stdio.h>
 #ifndef DRAGBAR_H
 #define DRAGBAR_H
 
@@ -45,7 +44,6 @@ void updateDragbar(Dragbar *self)
     {
         int deltaX = mouseRect.x - self->bounds.x;
         char newPercent = Clamp((float)deltaX / (float)self->bounds.width * 100.0f, 0, 100);
-        printf("%f, %f, %d\n", (float)deltaX, (float)self->bounds.width, newPercent);
         updateDragbarPercent(self, newPercent);
     }
     else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionRecs(mouseRect, buttonRect))

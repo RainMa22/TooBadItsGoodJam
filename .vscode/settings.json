@@ -7,7 +7,8 @@
         "drawutils.h": "c",
         "clickstats.h": "c",
         "scenedefinitions.h": "c",
-        "titlescene.h": "c"
+        "titlescene.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabledIfIncludesResolve"
 }
