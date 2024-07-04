@@ -88,7 +88,6 @@ void readSettings(RecordKeeper *keeper)
                 writeSettings(keeper);
                 return;
             }
-            puts(token);
             int value = atoi(token);
             if (0 > value || 100 < value)
             {
