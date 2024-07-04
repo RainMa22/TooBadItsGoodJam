@@ -1,1 +1,3 @@
 *.exe
+test.c
+settings/setting.txt
