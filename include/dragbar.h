@@ -29,8 +29,6 @@ void updateDragbarPercent(Dragbar *self, char percent)
 
     int btnX = bounds.x + (bounds.width * percent / 100 - btn->sizeX / 2);
     int btnY = bounds.y + (bounds.height - btn->sizeY) / 2;
-    printf("%d,%d\n", btn->x, btnX);
-    printf("%d,%d\n", btn->y, btnY);
     btn->x = btnX;
     btn->y = btnY;
     self->percent = percent;
