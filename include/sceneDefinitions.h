@@ -5,6 +5,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
+#include "recordKeeper.h"
 
 #define GAMENAME "BRAINROT TYCOON"
 
@@ -17,6 +18,15 @@ int sceneID = InactiveScene;
 //the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
 
+typedef struct Globals
+{
+  RecordKeeper settings;
+  // etc.
+} Globals;
+
+Globals globals;
+
+void initGlobals(void);
 int TitleSceneInit(void);
 int TitleSceneProcedure(void);
 int GameSceneInit(void);
@@ -27,5 +37,6 @@ int SettingSceneProcedure(void);
 
 #include "drawUtils.h"
 #include "button.h"
+
 
 #endif //SCENEDEFINITION_H

@@ -1,7 +1,9 @@
 #include "sceneDefinitions.h" //mouseCollisionSize also here
+
+#include "clickStats.h"
 #include "titleScene.h"
 #include "settingScene.h"
-#include "clickStats.h"
+
 
 int screenWidth = 800;
 int screenHeight = 600;
@@ -12,7 +14,7 @@ int main()
   SetTargetFPS(60);
 
   sceneID = TitleSceneInit();
-
+  initGlobals();
   while (!WindowShouldClose())
   {
     switch (sceneID)
@@ -32,6 +34,11 @@ int main()
   }
   CloseWindow();
   return 0;
+}
+
+void initGlobals()
+{
+  globals = (Globals){.settings= newSettingManager("setting.txt")};
 }
 
 // EFFECTS: Calls the init function of the switch-to scene and then returns the sceneID.

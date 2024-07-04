@@ -10,6 +10,8 @@ typedef struct Dragbar
     Color color;
     Color selected;
     bool isSelected;
+    RecordKeeper *listener;
+    const char* key;
 } Dragbar;
 
 // creates a new dragbar with the given bounds, buttonSize, percent, color, and selected color
@@ -18,7 +20,7 @@ Dragbar newDragbar(Rectangle bounds, Vector2 buttonSize, char percent, Color col
     int btnX = bounds.x + (bounds.width * percent / 100 - buttonSize.x / 2);
     int btnY = bounds.y + (bounds.height - buttonSize.y) / 2;
     Button btn = newButton(btnX, btnY, buttonSize.x, buttonSize.y, 0, 0, color, selected, "", RAYWHITE);
-    return (Dragbar){bounds, btn, percent, color, selected, false};
+    return (Dragbar){bounds, btn, percent, color, selected, false,NULL,NULL};
 }
 
 // update dragbar's percentage and button location with the given percentage
@@ -32,6 +34,12 @@ void updateDragbarPercent(Dragbar *self, char percent)
     btn->x = btnX;
     btn->y = btnY;
     self->percent = percent;
+
+    if (self->key != NULL && self->listener != NULL)
+    {
+        setRecordValue(self->listener,self->key,percent);
+    }
+    
 }
 
 void updateDragbar(Dragbar *self)
@@ -65,6 +73,11 @@ char getPercentage(Dragbar *bar)
 {
     int x = bar->percent;
     return x;
+}
+
+void setDragBarListener(Dragbar *self, RecordKeeper* keeper, const char* key){
+    self->listener = keeper;
+    self-> key = key;
 }
 
 #endif // DRAGBAR_H

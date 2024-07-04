@@ -26,5 +26,28 @@
             "program": "Main.exe",
             "preLaunchTask": "compile",
         },
+        {
+            "name": "Run",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "program": "tcc/tcc.exe",
+            "args": [
+                "-Iinclude/",
+                "-I./",
+                "-Llib/",
+                "-lraylib",
+                "-Wall",
+                "-Werror",
+                // "-Wunsupported",
+                "-Wwrite-strings",
+                "-Og",
+                "-run",
+                "Main.c",
+            ],
+        },
     ]
 }
