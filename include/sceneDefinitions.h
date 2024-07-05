@@ -15,6 +15,8 @@
 #define SettingScene 2
 int sceneID = InactiveScene;
 
+typedef const char* (String);
+
 // the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
 

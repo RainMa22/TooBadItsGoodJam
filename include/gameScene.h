@@ -4,6 +4,8 @@
 #ifndef GAMESCENE_H
 #define GAMESCENE_H
 
+#include "gameUpgrades.h"
+
 typedef struct GameProgression
 {
     ClickStats clickStats;    // game Currency basically
@@ -84,11 +86,12 @@ int GameSceneProcedure()
     const char *text = "This is the [Game Scene]\n\n(name pending)";
     drawGameStatBar();
     drawButton(pauseBtn);
-    DrawTextCentered(text, screenWidth / 2, screenHeight / 4, titleSize, DARKGRAY);
     // TODO
-
+    GameUpgrade upgrade1 = newGameUpgrade(screenWidth / 16, screenHeight * 3 / 8, screenWidth * 5 / 8, screenHeight / 8, "haha", 1, false, 0);
+    drawGameUpgrade(&upgrade1);
     // Test for click stats
-    DrawTextCentered(TextFormat("Current clicks: %08i", clickStats->currentClicks), screenWidth / 2, screenHeight / 4 + 50, titleSize, DARKGRAY); // Print the current clicker count
+    // DrawTextCentered(text, screenWidth / 2, screenHeight / 4, titleSize, DARKGRAY);
+    // DrawTextCentered(TextFormat("Current clicks: %08i", clickStats->currentClicks), screenWidth / 2, screenHeight / 4 + 50, titleSize, DARKGRAY); // Print the current clicker count
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -100,9 +103,14 @@ int GameSceneProcedure()
             globals.prevSceneInit = procedures[GameScene];
             return inits[SettingScene]();
         }
-        else
+        else if (isUpgradeManualClicked(upgrade1))
         {
-            addClicks(clickStats, 1); // Add clicks when mouse button just pressed (LMB)
+            // TODO: determine upgrade amount
+            addClicks(clickStats, 1);
+        }
+        else if (isUpgradeUpgradeClicked(upgrade1))
+        {
+            // TODO: consume clicks and upgrade upgrade
         }
     }
 
