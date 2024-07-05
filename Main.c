@@ -4,7 +4,6 @@
 #include "titleScene.h"
 #include "settingScene.h"
 
-
 int screenWidth = 800;
 int screenHeight = 600;
 // main gameloop
@@ -17,20 +16,7 @@ int main()
   initGlobals();
   while (!WindowShouldClose())
   {
-    switch (sceneID)
-    {
-    case TitleScene:
-      sceneID = TitleSceneProcedure();
-      break;
-    case GameScene:
-      sceneID = GameSceneProcedure();
-      break;
-    case SettingScene:
-      sceneID = SettingSceneProcedure();
-      break;
-    default:
-      break;
-    }
+    sceneID = procedures[sceneID]();
   }
   CloseWindow();
   return 0;
@@ -38,7 +24,7 @@ int main()
 
 void initGlobals()
 {
-  globals = (Globals){.settings= newSettingManager("setting.txt"),NULL};
+  globals = (Globals){.settings = newSettingManager("setting.txt"), NULL};
 }
 
 ClickStats clickStats;

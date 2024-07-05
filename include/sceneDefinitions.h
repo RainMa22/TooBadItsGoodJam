@@ -35,6 +35,11 @@ int GameSceneProcedure(void);
 int SettingSceneInit(void);
 int SettingSceneProcedure(void);
 
+typedef int (*Procedure)(void);
+
+Procedure inits[3] = {TitleSceneInit, GameSceneInit, SettingSceneInit};
+Procedure procedures[3] = {TitleSceneProcedure, GameSceneProcedure, SettingSceneProcedure};
+
 #include "drawUtils.h"
 #include "button.h"
 
