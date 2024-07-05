@@ -38,33 +38,8 @@ int main()
 
 void initGlobals()
 {
-  globals = (Globals){.settings= newSettingManager("setting.txt")};
+  globals = (Globals){.settings= newSettingManager("setting.txt"),NULL};
 }
-
-// EFFECTS: Calls the init function of the switch-to scene and then returns the sceneID.
-//          if the scene to be switched, do not call the init function
-// int switchTo(int scene)
-// {
-//   if (sceneID == scene)
-//     return scene;
-
-//   switch (scene)
-//   {
-//   case TitleScene:
-//     TitleSceneInit();
-//     break;
-//   case GameScene:
-//     GameSceneInit();
-//     break;
-//   default:
-//     break;
-//   }
-//   return scene;
-// }
-
-// ----------
-// GAME SCENE
-// ----------
 
 ClickStats clickStats;
 

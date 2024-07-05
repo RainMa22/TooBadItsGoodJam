@@ -28,7 +28,7 @@ int TitleSceneInit()
 // EFFECTS: draws the title scene with the Title text, a start button and a setting button
 int TitleSceneProcedure()
 {
-    //failsafe: avoid stupidity
+    // failsafe: avoid stupidity
     if (sceneID != TitleScene)
     {
         TitleSceneInit();
@@ -57,10 +57,12 @@ int TitleSceneProcedure()
     {
         if (CheckCollisionRecs(getButtonRect(startbtn), MouseRec))
         {
+            globals.prevSceneInit = TitleSceneInit;
             return GameSceneInit();
         }
         if (CheckCollisionRecs(getButtonRect(settingbtn), MouseRec))
         {
+            globals.prevSceneInit = TitleSceneInit;
             return SettingSceneInit();
         }
     }

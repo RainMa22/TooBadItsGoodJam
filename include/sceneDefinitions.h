@@ -15,12 +15,13 @@
 #define SettingScene 2
 int sceneID = InactiveScene;
 
-//the collision box of mouse needs to have a size
+// the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
 
 typedef struct Globals
 {
   RecordKeeper settings;
+  int (*prevSceneInit)(void);
   // etc.
 } Globals;
 
@@ -34,9 +35,7 @@ int GameSceneProcedure(void);
 int SettingSceneInit(void);
 int SettingSceneProcedure(void);
 
-
 #include "drawUtils.h"
 #include "button.h"
 
-
-#endif //SCENEDEFINITION_H
+#endif // SCENEDEFINITION_H
