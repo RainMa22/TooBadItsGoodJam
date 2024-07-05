@@ -62,7 +62,8 @@ Button drawButton(Button btn)
     DrawRectangle(btn.x, btn.y, btn.sizeX, btn.sizeY, body);
     // draw text centered at btn center
     Vector2 textSize = MeasureTextEx(GetFontDefault(), btn.text, btn.textSize, 0.0f);
-    DrawText(btn.text, btn.x + (btn.sizeX - roundf(textSize.x)) / 2, btn.y + (btn.sizeY - roundf(textSize.y)) / 2, btn.textSize, textColor);
+    // DrawText(btn.text, btn.x + (btn.sizeX - roundf(textSize.x)) / 2, btn.y + (btn.sizeY - roundf(textSize.y)) / 2, btn.textSize, textColor);
+    DrawTextCentered(btn.text,btn.x + btn.sizeX/2,btn.y+btn.sizeY/2,btn.textSize,textColor);
     return btn;
 }
 //EFFECTS: get the bounding Rectangle of the button
