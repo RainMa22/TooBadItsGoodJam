@@ -50,14 +50,13 @@ void readSettings(RecordKeeper *keeper)
         int size = 0;
         char *content = (char *)malloc(0xff);
         strcpy(content, "");
-        char *c2 = (char *)malloc(0xff);
+        char c2[0xff];
         while (fread(c2, 1, 0xff, f) != 0)
         {
             size += 0xff;
             content = (char *)realloc(content, size);
             strcat(content, c2);
         }
-        free(c2);
         const char *delim2 = ":\n";
         for (int i = 0; i < keeper->size; i++)
         {
