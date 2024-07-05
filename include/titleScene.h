@@ -15,7 +15,7 @@ int TitleSceneInit()
 {
     int titleSize = 42;
     int buttonWidth = 400;
-    int buttonHeight = 80;
+    int buttonHeight = 59;
     int textSize = 22;
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
