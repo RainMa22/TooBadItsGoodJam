@@ -42,6 +42,7 @@ int SettingSceneProcedure()
     {
         if (CheckCollisionRecs(getButtonRect(ssd.quitBtn), getMouseRect()))
         {
+            EndDrawing();
             return globals.prevSceneInit();
         }
     }
