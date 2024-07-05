@@ -63,7 +63,7 @@ int TitleSceneProcedure()
         if (CheckCollisionRecs(getButtonRect(settingbtn), MouseRec))
         {
             globals.prevSceneInit = TitleSceneInit;
-            return inits[GameScene]();
+            return inits[SettingScene]();
         }
     }
     EndDrawing();
