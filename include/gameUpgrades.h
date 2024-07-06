@@ -5,8 +5,8 @@
 
 typedef struct GameUpgrade
 {
+    int ID;
     int x, y, width, height;
-    const char *name;
     int level;
     bool automated;
     float framesPerPercent;
@@ -15,7 +15,10 @@ typedef struct GameUpgrade
     Button upgradeBtn;
 } GameUpgrade;
 
-GameUpgrade newGameUpgrade(int x, int y, int width, int height, const char *name, int level, bool automated, float framesPerPercent)
+const char *upgradeNames[2] = {(const char *)"Pyramid Scheme", (const char *)"Short Video with ADHD content"};
+// TODO: upgradeEvolutionNames, if evolution will be implemneted
+
+GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int level, bool automated, float framesPerPercent)
 {
     const int circleRadius = height / 2;
     const int textSize = height / 4;
@@ -23,7 +26,7 @@ GameUpgrade newGameUpgrade(int x, int y, int width, int height, const char *name
     // TODO: SHOW UPGRADE COST
     Button upgradeBtn = newButton(x + circleRadius + (width - circleRadius) / 2, y + height - textSize - 1, (width - circleRadius) / 2, textSize, 1, textSize, RAYWHITE, GRAY, "UPGRADE", DARKGRAY);
     return (GameUpgrade){
-        x, y, width, height, name, level, automated, framesPerPercent, 0.0f, doManuallyBtn, upgradeBtn};
+        ID, x, y, width, height, level, automated, framesPerPercent, 0.0f, doManuallyBtn, upgradeBtn};
 }
 
 void drawGameUpgrade(GameUpgrade *self)
@@ -32,7 +35,7 @@ void drawGameUpgrade(GameUpgrade *self)
     int y = self->y;
     int width = self->width;
     int height = self->height;
-    String text = self->name;
+    String text = upgradeNames[self->ID];
     Button doManuallyBtn = self->doManuallyBtn;
     Button upgradeBtn = self->upgradeBtn;
 

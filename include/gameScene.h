@@ -8,11 +8,8 @@
 
 typedef struct GameProgression
 {
-    ClickStats clickStats;    // game Currency basically
-    uint8_t upgrade1;         // 1-255
-    uint8_t upgrade2;         // 0-255
-    bool secondStageUnlocked; // unlock for next upgrade
-    bool thirdStageUnlocked;  // unlock for next upgrade
+    ClickStats clickStats;   // game Currency basically    bool secondStageUnlocked; // unlock for next upgrade
+    bool thirdStageUnlocked; // unlock for next upgrade
 
 } GameProgression;
 
@@ -20,9 +17,6 @@ typedef struct GameProgression
 GameProgression newGameProgression()
 {
     return (GameProgression){newClickStats(), // A new click stats instance.
-                             1,
-                             0,
-                             false,
                              false};
 }
 
@@ -30,6 +24,7 @@ typedef struct GameSceneData
 {
     GameProgression progression;
     Button pauseBtn;
+    GameUpgrade upgrades[2]; // list of GameUpgrades to draw
 } GameSceneData;
 
 GameSceneData gsd;
@@ -41,6 +36,17 @@ int GameSceneInit()
     int screenHeight = GetScreenHeight();
     Button pauseBtn = newButton(screenWidth / 16, screenWidth / 16, screenWidth / 16, screenWidth / 16, 1, 20, RAYWHITE, DARKGRAY, "||", DARKGRAY);
     gsd = (GameSceneData){newGameProgression(), pauseBtn};
+    for (size_t i = 0; i < 2; i++)
+    {
+        int ybase = screenHeight * 3 / 8;
+        int yoffset = screenHeight * 2 / 8;
+        int upgradeWidth = screenWidth * 5 / 8;
+        int upgradeHeight = screenHeight / 8;
+        int upgradeX = (screenWidth - upgradeWidth) / 2;
+        gsd.upgrades[i] = newGameUpgrade(i,upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
+                                         (int)(i == 0), false, 0);
+    }
+
     // TESTing click stats
     // addClicks(&clickStats, 30);
     // printf(clickStats.currentClicks);
@@ -87,8 +93,11 @@ int GameSceneProcedure()
     drawGameStatBar();
     drawButton(pauseBtn);
     // TODO
-    GameUpgrade upgrade1 = newGameUpgrade(screenWidth / 16, screenHeight * 3 / 8, screenWidth * 5 / 8, screenHeight / 8, "haha", 1, false, 0);
-    drawGameUpgrade(&upgrade1);
+    for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
+    {
+        drawGameUpgrade(&gsd.upgrades[i]);
+    }
+
     // Test for click stats
     // DrawTextCentered(text, screenWidth / 2, screenHeight / 4, titleSize, DARKGRAY);
     // DrawTextCentered(TextFormat("Current clicks: %08i", clickStats->currentClicks), screenWidth / 2, screenHeight / 4 + 50, titleSize, DARKGRAY); // Print the current clicker count
@@ -103,14 +112,16 @@ int GameSceneProcedure()
             globals.prevSceneInit = procedures[GameScene];
             return inits[SettingScene]();
         }
-        else if (isUpgradeManualClicked(upgrade1))
+        for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
         {
-            // TODO: determine upgrade amount
-            addClicks(clickStats, 1);
-        }
-        else if (isUpgradeUpgradeClicked(upgrade1))
-        {
-            // TODO: consume clicks and upgrade upgrade
+            if (isUpgradeManualClicked(gsd.upgrades[i]))
+            {
+                addClicks(clickStats, 1);
+            }
+            else if (isUpgradeUpgradeClicked(gsd.upgrades[i]))
+            {
+                // TODO: Consume clicks to levelup upgrade
+            }
         }
     }
 
