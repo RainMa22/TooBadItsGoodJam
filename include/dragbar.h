@@ -45,7 +45,7 @@ void updateDragbarPercent(Dragbar *self, char percent)
 void updateDragbar(Dragbar *self)
 {
     Rectangle mouseRect = getMouseRect();
-    Rectangle buttonRect = getButtonRect(self->dragButton);
+    Rectangle buttonRect = getButtonRect(&self->dragButton);
     if (self->isSelected)
     {
         int deltaX = mouseRect.x - self->bounds.x;

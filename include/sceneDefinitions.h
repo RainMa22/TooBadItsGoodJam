@@ -37,6 +37,15 @@ int GameSceneProcedure(void);
 int SettingSceneInit(void);
 int SettingSceneProcedure(void);
 
+int powi(int base, int exp){
+  int out = 1;
+  for (size_t i = 0; i < exp; i++)
+  {
+    out*=base;
+  }
+  return out;
+}
+
 typedef int (*Procedure)(void);
 
 Procedure inits[3] = {TitleSceneInit, GameSceneInit, SettingSceneInit};

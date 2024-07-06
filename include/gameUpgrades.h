@@ -8,7 +8,8 @@ typedef struct GameUpgrade
     int ID;
     int x, y, width, height;
     int level;
-    bool automated;
+    int upgradeCost;
+    int unitPerCycle;
     float framesPerPercent;
     float progress;
     Button doManuallyBtn;
@@ -18,7 +19,7 @@ typedef struct GameUpgrade
 const char *upgradeNames[2] = {(const char *)"Pyramid Scheme", (const char *)"Short Video with ADHD content"};
 // TODO: upgradeEvolutionNames, if evolution will be implemneted
 
-GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int level, bool automated, float framesPerPercent)
+GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int level, int upgradeCost, int unitPerCycle, float framesPerPercent)
 {
     const int circleRadius = height / 2;
     const int textSize = height / 4;
@@ -26,7 +27,7 @@ GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int leve
     // TODO: SHOW UPGRADE COST
     Button upgradeBtn = newButton(x + circleRadius + (width - circleRadius) / 2, y + height - textSize - 1, (width - circleRadius) / 2, textSize, 1, textSize, RAYWHITE, GRAY, "UPGRADE", DARKGRAY);
     return (GameUpgrade){
-        ID, x, y, width, height, level, automated, framesPerPercent, 0.0f, doManuallyBtn, upgradeBtn};
+        ID, x, y, width, height, level, upgradeCost, unitPerCycle, framesPerPercent, 0.0f, doManuallyBtn, upgradeBtn};
 }
 
 void drawGameUpgrade(GameUpgrade *self)
@@ -51,6 +52,19 @@ void drawGameUpgrade(GameUpgrade *self)
     DrawLine(x + circleRadius, y + textSize, x + width, y + textSize, GRAY);
     DrawText(text, x + circleRadius * 2, y, textSize, DARKGRAY);
 
+    // draw level indicator
+    const char *levelText;
+    if (self->level == 255)
+    {
+        levelText = "Lvl MAX";
+    }
+    else
+    {
+        levelText = TextFormat(TextFormat("Lvl %d", self->level));
+    }
+
+    DrawText(levelText, x + width - MeasureText(levelText, textSize) - textSize, y, textSize, GRAY);
+
     // Draw Button to progress
     drawButton(doManuallyBtn);
     drawButton(upgradeBtn);
@@ -63,14 +77,21 @@ void drawGameUpgrade(GameUpgrade *self)
     // TODO: Draw ProgressBar
 }
 
-bool isUpgradeManualClicked(GameUpgrade upgrade)
+void upgradeUpgrade(GameUpgrade *self)
 {
-    return isButtonClicked(upgrade.doManuallyBtn);
+    // TODO: offer increase in stats or enable automation
+    self->level++;
+    self->upgradeCost *= 2;
 }
 
-bool isUpgradeUpgradeClicked(GameUpgrade upgrade)
+bool isUpgradeManualClicked(GameUpgrade* upgrade)
 {
-    return isButtonClicked(upgrade.upgradeBtn);
+    return isButtonClicked(&upgrade->doManuallyBtn);
+}
+
+bool isUpgradeUpgradeClicked(GameUpgrade* upgrade)
+{
+    return isButtonClicked(&upgrade->upgradeBtn);
 }
 
 #endif // GAMEUPHRADES_H

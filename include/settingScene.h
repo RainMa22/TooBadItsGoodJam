@@ -40,7 +40,7 @@ int SettingSceneProcedure()
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
-        if (CheckCollisionRecs(getButtonRect(ssd.quitBtn), getMouseRect()))
+        if (CheckCollisionRecs(getButtonRect(&ssd.quitBtn), getMouseRect()))
         {
             EndDrawing();
             return globals.prevSceneInit();

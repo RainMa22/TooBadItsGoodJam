@@ -43,8 +43,9 @@ int GameSceneInit()
         int upgradeWidth = screenWidth * 5 / 8;
         int upgradeHeight = screenHeight / 8;
         int upgradeX = (screenWidth - upgradeWidth) / 2;
-        gsd.upgrades[i] = newGameUpgrade(i,upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
-                                         (int)(i == 0), false, 0);
+        gsd.upgrades[i] = newGameUpgrade(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
+                                         (int)(i == 0), powi(2, i), powi(2, i), 0);
+        printf("%d", powi(2, i));
     }
 
     // TESTing click stats
@@ -63,15 +64,19 @@ void drawGameStatBar()
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
     int unitSold = gsd.progression.clickStats.currentClicks;
+    int lifetimeSale = gsd.progression.clickStats.lifetimeClicks;
     int paddings[4] = {screenWidth * 2 / 16, screenWidth / 16, screenWidth / 16, screenWidth / 16};
     const int LEFT = 0;
     const int RIGHT = 1;
     const int TOP = 2;
     const int BOTTOM = 3;
-    // use Button fornow, need to have TextBox Struct later
+    // use Button for now, need to have TextBox Struct later
     Button clickStatTextBox = newButton(paddings[LEFT], paddings[TOP], screenWidth * 4 / 16, screenHeight / 12, 1, 20, RAYWHITE, DARKGRAY,
                                         TextFormat("Units Sold: %d", unitSold), DARKGRAY);
+    Button LifetimeSaleTextBox = newButton(paddings[LEFT] + screenWidth * 4 / 16, paddings[TOP], screenWidth * 4 / 16, screenHeight / 12, 1, 20, RAYWHITE, DARKGRAY,
+                                           TextFormat("Lifetime Sale: %d", lifetimeSale), DARKGRAY);
     drawButton(clickStatTextBox);
+    drawButton(LifetimeSaleTextBox);
 }
 
 int GameSceneProcedure()
@@ -105,7 +110,7 @@ int GameSceneProcedure()
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         // Input logic
-        if (CheckCollisionRecs(getButtonRect(pauseBtn), getMouseRect()))
+        if (CheckCollisionRecs(getButtonRect(&pauseBtn), getMouseRect()))
         {
             // goto settign scene when paused... fornow
             EndDrawing();
@@ -114,13 +119,23 @@ int GameSceneProcedure()
         }
         for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
         {
-            if (isUpgradeManualClicked(gsd.upgrades[i]))
+            GameUpgrade* gameUpgrade = &gsd.upgrades[i];
+            if (isUpgradeManualClicked(gameUpgrade))
             {
-                addClicks(clickStats, 1);
+                printf("%d", gameUpgrade->unitPerCycle);
+                addClicks(clickStats, gameUpgrade->unitPerCycle);
             }
-            else if (isUpgradeUpgradeClicked(gsd.upgrades[i]))
+            else if (isUpgradeUpgradeClicked(gameUpgrade))
             {
-                // TODO: Consume clicks to levelup upgrade
+                if (clickStats->currentClicks >= gameUpgrade->upgradeCost)
+                {
+                    consumeClicks(clickStats, gameUpgrade->upgradeCost);
+                    upgradeUpgrade(gameUpgrade);
+                }
+                else
+                {
+                    // TODO: add popup: not enough unit sold.
+                }
             }
         }
     }

@@ -21,13 +21,13 @@ typedef struct Button
 } Button;
 
 // EFFECTS: get the bounding Rectangle of the button
-Rectangle getButtonRect(Button btn)
+Rectangle getButtonRect(Button* btn)
 {
-    return (Rectangle){btn.x, btn.y, btn.sizeX, btn.sizeY};
+    return (Rectangle){btn->x, btn->y, btn->sizeX, btn->sizeY};
 }
 
 // EFFECTS: returns true if button is clicked;
-bool isButtonClicked(Button btn)
+bool isButtonClicked(Button* btn)
 {
     return CheckCollisionRecs(getButtonRect(btn), getMouseRect());
 }
@@ -50,7 +50,7 @@ Button newButton(int x, int y, int sizeX, int SizeY, int outlineSize, int textSi
 //          if mouse hovers over the button, flip the color so the text and outline color are the body color, and the body color is the outline color
 Button drawButton(Button btn)
 {
-    Rectangle buttonRec = getButtonRect(btn);
+    Rectangle buttonRec = getButtonRect(&btn);
     Color outline = btn.outline;
     Color textColor = btn.textColor;
     Color body = btn.body;
