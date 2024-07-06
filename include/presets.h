@@ -18,7 +18,7 @@ typedef struct PresetLoader
     char lineBuffer[512]; // pointer for line
     int tokenNum;
     char *tokenSavePtr; // pointer for token
-    FILE *data; // data of file
+    FILE *data;         // data of file
 } PresetLoader;
 
 // creates a presetLoader with the filename, it will read "presets/{filename}""
@@ -67,6 +67,12 @@ char *nextPresetToken(PresetLoader *self, const char *delim)
     {
         self->tokenSavePtr++;
     }
+    if (token[0] == '\0')
+    {
+        free(token);
+        return (char *)NULL;
+    }
+
     return token;
 }
 
