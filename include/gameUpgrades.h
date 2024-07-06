@@ -2,6 +2,15 @@
 #define GAMEUPGRADES_H
 
 #include "sceneDefinitions.h"
+#include "presets.h"
+/*
+TODO: put this in an extra file
+
+GameUpgrade Preset Specification
+Must have 255 lines
+first line denotes the UpgradeCost(int), unitPerCycle(int) and framesPerPercent(float), delimited by space, at level 0;
+the n-th line represents the change in the aforemention stat at n-th level
+ */
 
 typedef struct GameUpgrade
 {

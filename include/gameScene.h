@@ -9,7 +9,7 @@
 typedef struct GameProgression
 {
     ClickStats clickStats;   // game Currency basically    bool secondStageUnlocked; // unlock for next upgrade
-    bool thirdStageUnlocked; // unlock for next upgrade
+    bool secondStageUnlocked; // unlock for next upgrade
 
 } GameProgression;
 
@@ -45,7 +45,6 @@ int GameSceneInit()
         int upgradeX = (screenWidth - upgradeWidth) / 2;
         gsd.upgrades[i] = newGameUpgrade(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
                                          (int)(i == 0), powi(2, i), powi(2, i), 0);
-        printf("%d", powi(2, i));
     }
 
     // TESTing click stats
@@ -122,7 +121,6 @@ int GameSceneProcedure()
             GameUpgrade* gameUpgrade = &gsd.upgrades[i];
             if (isUpgradeManualClicked(gameUpgrade))
             {
-                printf("%d", gameUpgrade->unitPerCycle);
                 addClicks(clickStats, gameUpgrade->unitPerCycle);
             }
             else if (isUpgradeUpgradeClicked(gameUpgrade))
