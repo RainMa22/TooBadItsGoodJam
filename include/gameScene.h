@@ -134,7 +134,7 @@ int GameSceneProcedure()
                 }
                 else
                 {
-                    // TODO: add popup: not enough unit sold.
+                    // TODO: add Effect: not enough unit sold.
                 }
             }
         }
