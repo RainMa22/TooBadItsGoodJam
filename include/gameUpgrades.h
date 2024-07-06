@@ -32,6 +32,7 @@ GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int leve
 
 void drawGameUpgrade(GameUpgrade *self)
 {
+    const char *upgradeString = TextFormat("UPGRADE (COST: %d)", self->upgradeCost);
     int x = self->x;
     int y = self->y;
     int width = self->width;
@@ -39,9 +40,23 @@ void drawGameUpgrade(GameUpgrade *self)
     String text = upgradeNames[self->ID];
     Button doManuallyBtn = self->doManuallyBtn;
     Button upgradeBtn = self->upgradeBtn;
+    Color circleColor = RAYWHITE;
 
+    upgradeBtn.text = upgradeString;
     const int circleRadius = height / 2;
     const int textSize = height / 4;
+
+    if (self->level == 0)
+    {
+        // not leveled behavior
+        upgradeBtn.x = doManuallyBtn.x;
+        upgradeBtn.sizeX = width - circleRadius;
+        doManuallyBtn = (Button){};
+        circleColor = GRAY;
+        Button lockedTextBox = newButton(x + circleRadius, y, width - circleRadius, height, 1, textSize * 2, GRAY, GRAY, "LOCKED", DARKGRAY);
+        drawButton(lockedTextBox);
+        // DrawRectangle(x + circleRadius, y, width - circleRadius, height, GRAY);
+    }
 
     // Draw outline
     DrawLine(x + circleRadius, y, x + width, y, GRAY);
@@ -63,14 +78,14 @@ void drawGameUpgrade(GameUpgrade *self)
         levelText = TextFormat(TextFormat("Lvl %d", self->level));
     }
 
-    DrawText(levelText, x + width - MeasureText(levelText, textSize) - textSize, y, textSize, GRAY);
+    DrawText(levelText, x + width - MeasureText(levelText, textSize) - textSize, y, textSize, DARKGRAY);
 
     // Draw Button to progress
     drawButton(doManuallyBtn);
     drawButton(upgradeBtn);
 
     // draw circle outline
-    DrawCircle(x + circleRadius, y + circleRadius, circleRadius, RAYWHITE);
+    DrawCircle(x + circleRadius, y + circleRadius, circleRadius, circleColor);
     DrawCircleLines(x + circleRadius, y + circleRadius, circleRadius, GRAY);
     // TODO: DrawTexture inside circle, correlates with upgrade
 
@@ -84,12 +99,12 @@ void upgradeUpgrade(GameUpgrade *self)
     self->upgradeCost *= 2;
 }
 
-bool isUpgradeManualClicked(GameUpgrade* upgrade)
+bool isUpgradeManualClicked(GameUpgrade *upgrade)
 {
-    return isButtonClicked(&upgrade->doManuallyBtn);
+    return upgrade->level != 0 && isButtonClicked(&upgrade->doManuallyBtn);
 }
 
-bool isUpgradeUpgradeClicked(GameUpgrade* upgrade)
+bool isUpgradeUpgradeClicked(GameUpgrade *upgrade)
 {
     return isButtonClicked(&upgrade->upgradeBtn);
 }
