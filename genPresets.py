@@ -10,6 +10,6 @@ for j in range(2):
         for i in range(2,255,1):
             diff = -random.getrandbits(j+1)
             frames_per_percent += diff
-            file.write(f"{i**(2+j)} {+random.getrandbits(j+1)} {max(frames_per_percent,22)}")
+            file.write(f"{i**(2+j)} {+random.getrandbits(j+1)} {diff if frames_per_percent > 1 else 0}")
             file.write("\n")
         file.close()

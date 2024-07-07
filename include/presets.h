@@ -7,7 +7,7 @@ TODO: put this in an extra file
 
 GameUpgrade Preset Specification
 Must have 255 lines
-first line denotes the UpgradeCost(int), unitPerCycle(int) and framesPerPercent(int), delimited by space, at level 0;
+first line denotes the UpgradeCost(int), unitPerCycle(int) and framesPerCycle(int), delimited by space, at level 0;
 the n-th line represents the change in the aforemention stat at n-th level
  */
 
@@ -66,7 +66,7 @@ bool nextPresetLine(PresetLoader *self)
     }
 
     self->tokenSavePtr = &self->lineBuffer[0];
-    puts(self->lineBuffer);
+    // puts(self->lineBuffer);
     return (self->lineBuffer != NULL);
 }
 
@@ -104,7 +104,7 @@ char *nextPresetToken(PresetLoader *self)
         free(token);
         return (char *)NULL;
     }
-    puts(token);
+    // puts(token);
     return token;
 }
 

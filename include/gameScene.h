@@ -101,6 +101,11 @@ int GameSceneProcedure()
     for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
     {
         drawGameUpgrade(&gsd.upgrades[i]);
+        if (gsd.upgrades[i].progress >= 1.0f)
+        {
+            addClicks(clickStats, gsd.upgrades[i].unitPerCycle);
+            (&gsd.upgrades[i])->progress -= 1.0f;
+        }
     }
 
     // Test for click stats
