@@ -51,7 +51,7 @@ void drawSettingsBox(SettingsBox *self)
 
     textPos.y += self->bounds.height * 2 / 8;
     indicatorPos.y += self->bounds.height * 2 / 8;
-    DrawText("Narration Volume", textPos.x, textPos.y, textSize, DARKGRAY);
+    DrawText("Narration&SFX Volume", textPos.x, textPos.y, textSize, DARKGRAY);
     drawDragbar(&(self->narration));
     char narrationPercentage = getPercentage(&(self->narration));
     if (narrationPercentage == 0)
