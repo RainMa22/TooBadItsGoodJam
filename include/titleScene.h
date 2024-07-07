@@ -8,6 +8,7 @@ typedef struct titleSceneData
     int textSize;
     Button startbtn;
     Button settingsbtn;
+    Sound openingMusic;
 } titleSceneData;
 
 titleSceneData tsd;
@@ -22,7 +23,16 @@ int TitleSceneInit()
     Button startbtn = newButton((screenWidth - buttonWidth) / 2, (screenHeight / 8 * 5 - buttonHeight / 2), buttonWidth, buttonHeight, 5, textSize, RAYWHITE, DARKGRAY, "Start!", DARKGRAY);
     Button settingbtn = newButton((screenWidth - buttonWidth) / 2, (screenHeight / 8 * 6 - buttonHeight / 2), buttonWidth, buttonHeight, 5, textSize, RAYWHITE, DARKGRAY, "Settings", DARKGRAY);
     tsd = (titleSceneData){titleSize, buttonWidth, buttonHeight, textSize, startbtn, settingbtn};
+    tsd.openingMusic = LoadSound("resources\\music\\Jam-01.ogg");
+    Speaker s = createSound(tsd.openingMusic, 1.0f);
+    s.repeat = true;
+    addSpeaker(s);
     return TitleScene;
+}
+
+void titleCleanup()
+{
+    UnloadSound(tsd.openingMusic);
 }
 
 // EFFECTS: draws the title scene with the Title text, a start button and a setting button

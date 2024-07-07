@@ -23,7 +23,7 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "console": "integratedTerminal",
-            "program": "Main.exe",
+            "program": "Brainrot.exe",
             "preLaunchTask": "compile",
         },
         {

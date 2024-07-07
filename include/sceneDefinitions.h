@@ -57,6 +57,17 @@ typedef struct Globals
 
 Globals globals;
 
+void addSpeaker(Speaker speaker){
+  for (size_t i = 0; i < MAX_SOUND_PER_SCENE; i++)
+  {
+    if(isSpeakerPlaceHolder(&globals.speakers[i])){
+      globals.speakers[i] = speaker;
+      return;
+    }
+  }
+  removeSpeaker(&speaker);
+}
+
 INLINE int powi(int base, int exp)
 {
   int out = 1;

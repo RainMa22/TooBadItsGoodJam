@@ -35,7 +35,7 @@
                 "-Ofast",
                 "Main.c",
                 "-o",
-                "Main.exe"
+                "Brainrot.exe"
             ],
         },{
             "label": "compile(GCC)",

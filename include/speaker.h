@@ -16,6 +16,10 @@ Speaker createPlaceHolderSpeaker()
     return (Speaker){false};
 }
 
+bool isSpeakerPlaceHolder(Speaker *speaker)
+{
+    return !speaker->occupied;
+}
 void removeSpeaker(Speaker *self)
 {
     UnloadSoundAlias(self->sound);
@@ -62,6 +66,7 @@ void updateSpeaker(Speaker *speaker)
     if (!speaker->initiated && IsSoundReady(speaker->sound))
     {
         speaker->initiated = true;
+
         PlaySound(speaker->sound);
     }
     else if (speaker->initiated && !IsSoundPlaying(speaker->sound))
