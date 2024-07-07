@@ -13,7 +13,13 @@
 #include "raymath.h"
 #include "recordKeeper.h"
 
+
 #define GAMENAME "BRAINROT TYCOON"
+#define SAVEFILE_NAME "save.sav"
+#define GAMEUPGRADES_ID_MAX 2
+#define GAMESCENE_EFFECTS_MAX 512
+
+#include "saveManager.h"
 
 #define InactiveScene -1
 #define TitleScene 0
@@ -27,10 +33,13 @@ typedef const char *(String);
 // the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
 
+
+
 typedef struct Globals
 {
   RecordKeeper settings;
   int (*prevSceneInit)(void);
+  SaveManager save;
   // etc.
 } Globals;
 

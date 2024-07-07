@@ -25,5 +25,5 @@ int main()
 
 void initGlobals()
 {
-  globals = (Globals){.settings = newSettingManager("setting.txt"), NULL};
+  globals = (Globals){.settings = newSettingManager("setting.txt"), NULL, newSaveManager(SAVEFILE_NAME)};
 }

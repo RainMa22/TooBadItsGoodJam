@@ -14,7 +14,8 @@
         "settingsbox.h": "c",
         "dragbar.h": "c",
         "recordkeeper.h": "c",
-        "gamescene.h": "c"
+        "gamescene.h": "c",
+        "savemanager.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabledIfIncludesResolve"
 }

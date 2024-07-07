@@ -42,7 +42,7 @@
             "label": "compile(GCC)",
             "command": "gcc",
             "args": [
-                "-Iinclude/*",
+                "-Iinclude/*.h",
                 "-I.",
                 "-Llib",
                 "-lraylib",

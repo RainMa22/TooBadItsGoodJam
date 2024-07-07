@@ -40,7 +40,7 @@ int GameSceneInit()
     int screenHeight = GetScreenHeight();
     Button pauseBtn = newButton(screenWidth / 16, screenWidth / 16, screenWidth / 16, screenWidth / 16, 1, 20, RAYWHITE, DARKGRAY, "||", DARKGRAY);
     gsd = (GameSceneData){newGameProgression(), pauseBtn};
-    for (size_t i = 0; i < 2; i++)
+    for (size_t i = 0; i < GAMEUPGRADES_ID_MAX; i++)
     {
         int ybase = screenHeight * 3 / 8;
         int yoffset = screenHeight * 2 / 8;
@@ -49,13 +49,17 @@ int GameSceneInit()
         int upgradeX = (screenWidth - upgradeWidth) / 2;
         // gsd.upgrades[i] = newGameUpgrade(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
         //                                  (int)(i == 0), 1 << i, 1 << i, 0);
-        gsd.upgrades[i] = loadFromPreset(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight, (int)(i == 0));
+
+        // gsd.upgrades[i] = loadFromPreset(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
+        //     (int)(i == 0));
+        gsd.upgrades[i] = loadFromPreset(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
+                                         loadLevelFromSave(&globals.save, i));
     }
     for (size_t i = 0; i < GAMESCENE_EFFECTS_MAX; i++)
     {
         gsd.effects[i] = newUninitializedEffects();
     }
-    
+
     // TESTing click stats
     // addClicks(&clickStats, 30);
     // printf(clickStats.currentClicks);
@@ -93,11 +97,13 @@ void cleanUpGame(GameSceneData *self)
     {
         removeEffects(&self->effects[i]);
     }
-
+    char levels[GAMEUPGRADES_ID_MAX];
     for (size_t i = 0; i < sizeof(self->upgrades) / sizeof(GameUpgrade); i++)
     {
+        levels[i] = self->upgrades[i].level;
         removeUpgrades(&self->upgrades[i]);
     }
+    saveLevels(&globals.save,levels);
 }
 
 void addEffects(Effects effects)
@@ -183,7 +189,7 @@ int GameSceneProcedure()
                 }
                 else
                 {
-                    
+
                     const char *text = TextFormat("not Enough unit sold! %d Needed", gameUpgrade->upgradeCost);
                     addEffects(newTextEffects(mouse.x, mouse.y, titleSize / 3, strdup(text), RED));
                 }
