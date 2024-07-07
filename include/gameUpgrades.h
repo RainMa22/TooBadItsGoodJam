@@ -19,16 +19,17 @@ typedef struct GameUpgrade
     int level;
     int upgradeCost;
     int unitPerCycle;
-    float framesPerPercent;
+    int framesPerPercent;
     float progress;
     Button doManuallyBtn;
     Button upgradeBtn;
+    PresetLoader *loader;
 } GameUpgrade;
 
 const char *upgradeNames[2] = {(const char *)"Pyramid Scheme", (const char *)"Short Video with ADHD content"};
 // TODO: upgradeEvolutionNames, if evolution will be implemneted
 
-GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int level, int upgradeCost, int unitPerCycle, float framesPerPercent)
+GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int level, int upgradeCost, int unitPerCycle, float framesPerPercent, PresetLoader *loader)
 {
     const int circleRadius = height / 2;
     const int textSize = height / 4;
@@ -36,7 +37,33 @@ GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int leve
     // TODO: SHOW UPGRADE COST
     Button upgradeBtn = newButton(x + circleRadius + (width - circleRadius) / 2, y + height - textSize - 1, (width - circleRadius) / 2, textSize, 1, textSize, RAYWHITE, GRAY, "UPGRADE", DARKGRAY);
     return (GameUpgrade){
-        ID, x, y, width, height, level, upgradeCost, unitPerCycle, framesPerPercent, 0.0f, doManuallyBtn, upgradeBtn};
+        ID, x, y, width, height, level, upgradeCost, unitPerCycle, framesPerPercent, 0, doManuallyBtn, upgradeBtn, loader};
+}
+
+GameUpgrade loadFromPreset(int ID, int x, int y, int width, int height, int level)
+{
+    PresetLoader *loaderptr = malloc(sizeof(PresetLoader));
+    PresetLoader loader = newPresetLoader(TextFormat("presets\\%d.txt", ID));
+    *loaderptr = loader;
+    int values[3] = {0, 0, 0};
+    for (char i = 0; i <= level; i++)
+    {
+        nextPresetLine(&loader);
+        for (char j = 0; j < 3; j++)
+        {
+            char *sval = nextPresetToken(&loader);
+            if (sval == NULL)
+            {
+                stopPresetLoader(&loader);
+                return newGameUpgrade(ID, x, y, width, height, -1, -1, -1, 0, NULL);
+            }
+
+            values[j] += atoi(sval);
+            free(sval);
+        }
+    }
+    // stopPresetLoader(&loader);
+    return newGameUpgrade(ID, x, y, width, height, level, values[0], values[1], values[2], loaderptr);
 }
 
 void drawGameUpgrade(GameUpgrade *self)
@@ -103,9 +130,29 @@ void drawGameUpgrade(GameUpgrade *self)
 
 void upgradeUpgrade(GameUpgrade *self)
 {
+    if (self->level == 255)
+    {
+        return;
+    }
+
     // TODO: offer increase in stats or enable automation
     self->level++;
-    self->upgradeCost *= 2;
+    int *values[3] = {&self->upgradeCost, &self->unitPerCycle, &self->framesPerPercent};
+    nextPresetLine(self->loader);
+    for (char j = 0; j < 3; j++)
+    {
+        char *sval = nextPresetToken(self->loader);
+        if (sval == NULL)
+        {
+            break;
+        }
+
+        *values[j] += atoi(sval);
+        // puts(sval);
+        // printf("%d,", *values[j]);
+        free(sval);
+    }
+    // printf("%d,%d,%d\n", self->upgradeCost, self->unitPerCycle, self->framesPerPercent);
 }
 
 bool isUpgradeManualClicked(GameUpgrade *upgrade)
@@ -116,6 +163,11 @@ bool isUpgradeManualClicked(GameUpgrade *upgrade)
 bool isUpgradeUpgradeClicked(GameUpgrade *upgrade)
 {
     return isButtonClicked(&upgrade->upgradeBtn);
+}
+
+void removeUpgrades(GameUpgrade* self){
+    stopPresetLoader(self->loader);
+    self = NULL;
 }
 
 #endif // GAMEUPHRADES_H

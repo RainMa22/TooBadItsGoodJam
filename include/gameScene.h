@@ -8,7 +8,7 @@
 
 typedef struct GameProgression
 {
-    ClickStats clickStats;   // game Currency basically    bool secondStageUnlocked; // unlock for next upgrade
+    ClickStats clickStats;    // game Currency basically    bool secondStageUnlocked; // unlock for next upgrade
     bool secondStageUnlocked; // unlock for next upgrade
 
 } GameProgression;
@@ -43,8 +43,9 @@ int GameSceneInit()
         int upgradeWidth = screenWidth * 5 / 8;
         int upgradeHeight = screenHeight / 8;
         int upgradeX = (screenWidth - upgradeWidth) / 2;
-        gsd.upgrades[i] = newGameUpgrade(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
-                                         (int)(i == 0), powi(2, i), powi(2, i), 0);
+        // gsd.upgrades[i] = newGameUpgrade(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight,
+        //                                  (int)(i == 0), 1 << i, 1 << i, 0);
+        gsd.upgrades[i] = loadFromPreset(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight, (int)(i == 0));
     }
 
     // TESTing click stats
@@ -113,12 +114,16 @@ int GameSceneProcedure()
         {
             // goto settign scene when paused... fornow
             EndDrawing();
+            for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
+            {
+                removeUpgrades(&gsd.upgrades[i]);
+            }
             globals.prevSceneInit = procedures[GameScene];
             return inits[SettingScene]();
         }
         for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
         {
-            GameUpgrade* gameUpgrade = &gsd.upgrades[i];
+            GameUpgrade *gameUpgrade = &gsd.upgrades[i];
             if (isUpgradeManualClicked(gameUpgrade))
             {
                 addClicks(clickStats, gameUpgrade->unitPerCycle);
