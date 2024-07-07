@@ -5,6 +5,9 @@
 #define GAMESCENE_H
 
 #include "gameUpgrades.h"
+#include "gameEffects.h"
+
+#define GAMESCENE_EFFECTS_MAX 512
 
 typedef struct GameProgression
 {
@@ -25,6 +28,7 @@ typedef struct GameSceneData
     GameProgression progression;
     Button pauseBtn;
     GameUpgrade upgrades[2]; // list of GameUpgrades to draw
+    Effects effects[GAMESCENE_EFFECTS_MAX];
 } GameSceneData;
 
 GameSceneData gsd;
@@ -47,7 +51,11 @@ int GameSceneInit()
         //                                  (int)(i == 0), 1 << i, 1 << i, 0);
         gsd.upgrades[i] = loadFromPreset(i, upgradeX, ybase + yoffset * i, upgradeWidth, upgradeHeight, (int)(i == 0));
     }
-
+    for (size_t i = 0; i < GAMESCENE_EFFECTS_MAX; i++)
+    {
+        gsd.effects[i] = newUninitializedEffects();
+    }
+    
     // TESTing click stats
     // addClicks(&clickStats, 30);
     // printf(clickStats.currentClicks);
@@ -79,6 +87,31 @@ void drawGameStatBar()
     drawButton(LifetimeSaleTextBox);
 }
 
+void cleanUpGame(GameSceneData *self)
+{
+    for (size_t i = 0; i < GAMESCENE_EFFECTS_MAX; i++)
+    {
+        removeEffects(&self->effects[i]);
+    }
+
+    for (size_t i = 0; i < sizeof(self->upgrades) / sizeof(GameUpgrade); i++)
+    {
+        removeUpgrades(&self->upgrades[i]);
+    }
+}
+
+void addEffects(Effects effects)
+{
+    for (size_t i = 0; i < GAMESCENE_EFFECTS_MAX; i++)
+    {
+        if (!isEffectsInitialized(gsd.effects[i]))
+        {
+            gsd.effects[i] = effects;
+            break;
+        }
+    }
+}
+
 int GameSceneProcedure()
 {
     // failsafe: avoid stupidity
@@ -107,6 +140,11 @@ int GameSceneProcedure()
             (&gsd.upgrades[i])->progress -= 1.0f;
         }
     }
+    // drawEffects
+    for (size_t i = 0; i < GAMESCENE_EFFECTS_MAX; i++)
+    {
+        drawEffects(&gsd.effects[i]);
+    }
 
     // Test for click stats
     // DrawTextCentered(text, screenWidth / 2, screenHeight / 4, titleSize, DARKGRAY);
@@ -119,16 +157,18 @@ int GameSceneProcedure()
         {
             // goto settign scene when paused... fornow
             EndDrawing();
-            for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
-            {
-                removeUpgrades(&gsd.upgrades[i]);
-            }
+            // for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
+            // {
+            //     removeUpgrades(&gsd.upgrades[i]);
+            // }
+            cleanUpGame(&gsd);
             globals.prevSceneInit = procedures[GameScene];
             return inits[SettingScene]();
         }
         for (size_t i = 0; i < sizeof(gsd.upgrades) / sizeof(GameUpgrade); i++)
         {
             GameUpgrade *gameUpgrade = &gsd.upgrades[i];
+            Rectangle mouse = getMouseRect();
             if (isUpgradeManualClicked(gameUpgrade))
             {
                 addClicks(clickStats, gameUpgrade->unitPerCycle);
@@ -139,10 +179,13 @@ int GameSceneProcedure()
                 {
                     consumeClicks(clickStats, gameUpgrade->upgradeCost);
                     upgradeUpgrade(gameUpgrade);
+                    addEffects(newTextEffects(mouse.x, mouse.y, titleSize / 3, strdup("Upgraded!"), DARKGRAY));
                 }
                 else
                 {
-                    // TODO: add Effect: not enough unit sold.
+                    
+                    const char *text = TextFormat("not Enough unit sold! %d Needed", gameUpgrade->upgradeCost);
+                    addEffects(newTextEffects(mouse.x, mouse.y, titleSize / 3, strdup(text), RED));
                 }
             }
         }

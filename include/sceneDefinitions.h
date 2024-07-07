@@ -3,6 +3,12 @@
 #ifndef SCENEDEFINITION_H
 #define SCENEDEFINITION_H
 
+#if __GNUC_STDC_INLINE__
+#define INLINE inline
+#else
+#define INLINE
+#endif
+
 #include "raylib.h"
 #include "raymath.h"
 #include "recordKeeper.h"
@@ -13,9 +19,10 @@
 #define TitleScene 0
 #define GameScene 1
 #define SettingScene 2
+
 int sceneID = InactiveScene;
 
-typedef const char* (String);
+typedef const char *(String);
 
 // the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
@@ -37,11 +44,12 @@ int GameSceneProcedure(void);
 int SettingSceneInit(void);
 int SettingSceneProcedure(void);
 
-int powi(int base, int exp){
+INLINE int powi(int base, int exp)
+{
   int out = 1;
   for (size_t i = 0; i < exp; i++)
   {
-    out*=base;
+    out *= base;
   }
   return out;
 }

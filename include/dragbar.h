@@ -78,6 +78,7 @@ char getPercentage(Dragbar *bar)
 void setDragBarListener(Dragbar *self, RecordKeeper* keeper, const char* key){
     self->listener = keeper;
     self-> key = key;
+    return;
 }
 
 #endif // DRAGBAR_H

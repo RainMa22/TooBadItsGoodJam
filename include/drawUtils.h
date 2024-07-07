@@ -1,7 +1,9 @@
-#include "sceneDefinitions.h"
+// #include "sceneDefinitions.h"
 
 #ifndef DRAWUTILS_H
 #define DRAWUTILS_H
+
+#include "raylib.h"
 
 void DrawTextCenteredEx(Font font, const char *text, int centerX, int centerY, int textSize, float gap, Color color)
 {

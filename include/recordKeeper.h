@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <io.h>
 
 #ifndef RECORDKEEPER_H
 #define RECORDKEEPER_H

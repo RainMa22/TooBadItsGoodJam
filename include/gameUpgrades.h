@@ -37,7 +37,6 @@ GameUpgrade newGameUpgrade(int ID, int x, int y, int width, int height, int leve
     const int circleRadius = height / 2;
     const int textSize = height / 4;
     Button doManuallyBtn = newButton(x + circleRadius, y + height - textSize - 1, (width - circleRadius) / 2, textSize, 1, textSize, RAYWHITE, GRAY, "DO IT MANUALLY", DARKGRAY);
-    // TODO: SHOW UPGRADE COST
     Button upgradeBtn = newButton(x + circleRadius + (width - circleRadius) / 2, y + height - textSize - 1, (width - circleRadius) / 2, textSize, 1, textSize, RAYWHITE, GRAY, "UPGRADE", DARKGRAY);
     return (GameUpgrade){
         ID, x, y, width, height, level, upgradeCost, unitPerCycle, framesPerCycle, 0, doManuallyBtn, upgradeBtn, loader};
@@ -143,7 +142,6 @@ void drawGameUpgrade(GameUpgrade *self)
     DrawCircleLines(x + circleRadius, y + circleRadius, circleRadius, GRAY);
     // TODO: DrawTexture inside circle, correlates with upgrade
 
-    // TODO: Draw ProgressBar
 }
 
 void upgradeUpgrade(GameUpgrade *self)
@@ -172,7 +170,6 @@ void upgradeUpgrade(GameUpgrade *self)
     //     // printf("%d,", *values[j]);
     //     free(sval);
     // }
-    // printf("%d,%d,%d\n", self->upgradeCost, self->unitPerCycle, self->framesPerCycle);
 }
 
 bool isUpgradeManualClicked(GameUpgrade *upgrade)
@@ -182,6 +179,13 @@ bool isUpgradeManualClicked(GameUpgrade *upgrade)
 
 bool isUpgradeUpgradeClicked(GameUpgrade *upgrade)
 {
+    if (upgrade->level == 0)
+    {
+        // not leveled behavior
+        const int circleRadius = upgrade->height / 2;
+        upgrade->upgradeBtn.x = upgrade->doManuallyBtn.x;
+        upgrade->upgradeBtn.sizeX = upgrade->width - circleRadius;
+    }
     return isButtonClicked(&upgrade->upgradeBtn);
 }
 

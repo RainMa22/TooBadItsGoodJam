@@ -44,4 +44,4 @@ void resetClicks(ClickStats* clickStatsPtr) {
     (*clickStatsPtr).lifetimeClicks = 0;
 }
 
-#endif CLICK_STATS_H
+#endif //CLICK_STATS_H

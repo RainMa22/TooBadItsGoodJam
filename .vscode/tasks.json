@@ -33,6 +33,25 @@
                 // "-Wunsupported",
                 "-Wwrite-strings",
                 "-Og",
+                "-g",
+                "Main.c",
+                "-o",
+                "Main.exe"
+            ],
+        },{
+            "label": "compile(GCC)",
+            "command": "gcc",
+            "args": [
+                "-Iinclude/*",
+                "-I.",
+                "-Llib",
+                "-lraylib",
+                // "-Wall",
+                // "-Werror",
+                // "-Wunsupported",
+                // "-Wwrite-strings",
+                // "-g",
+                "-Og",
                 "Main.c",
                 "-o",
                 "Main.exe"
