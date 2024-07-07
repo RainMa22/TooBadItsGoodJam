@@ -68,6 +68,13 @@ void addSpeaker(Speaker speaker){
   removeSpeaker(&speaker);
 }
 
+void stopAllSpeakers(){
+  for (size_t i = 0; i < MAX_SOUND_PER_SCENE; i++)
+  {
+    removeSpeaker(&globals.speakers[i]);
+  }
+}
+
 INLINE int powi(int base, int exp)
 {
   int out = 1;

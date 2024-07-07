@@ -22,6 +22,11 @@ bool isSpeakerPlaceHolder(Speaker *speaker)
 }
 void removeSpeaker(Speaker *self)
 {
+    if (isSpeakerPlaceHolder(self))
+    {
+        return;
+    }
+    StopSound(self->sound);
     UnloadSoundAlias(self->sound);
     self->occupied = false;
 }

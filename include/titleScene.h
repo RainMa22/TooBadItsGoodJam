@@ -32,7 +32,11 @@ int TitleSceneInit()
 
 void titleCleanup()
 {
+    stopAllSpeakers();
+    StopSound(tsd.openingMusic);
     UnloadSound(tsd.openingMusic);
+    // CloseAudioDevice();
+    // InitAudioDevice();
 }
 
 // EFFECTS: draws the title scene with the Title text, a start button and a setting button
@@ -69,12 +73,14 @@ int TitleSceneProcedure()
         {
             globals.prevSceneInit = TitleSceneInit;
             EndDrawing();
+            titleCleanup();
             return inits[GameScene]();
         }
         if (isButtonClicked(&settingbtn))
         {
             globals.prevSceneInit = TitleSceneInit;
             EndDrawing();
+            titleCleanup();
             return inits[SettingScene]();
         }
     }
