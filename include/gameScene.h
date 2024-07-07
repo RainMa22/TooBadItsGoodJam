@@ -29,6 +29,7 @@ typedef struct GameSceneData
     Button pauseBtn;
     GameUpgrade upgrades[2]; // list of GameUpgrades to draw
     Effects effects[GAMESCENE_EFFECTS_MAX];
+    Sound gameSceneMusic;
 } GameSceneData;
 
 GameSceneData gsd;
@@ -59,7 +60,10 @@ int GameSceneInit()
     {
         gsd.effects[i] = newUninitializedEffects();
     }
-
+    gsd.gameSceneMusic = LoadSound("resources\\music\\questionable.ogg");
+    Speaker speaker = createSound(gsd.gameSceneMusic,.5f);
+    speaker.repeat = true;
+    addSpeaker(speaker);
     // TESTing click stats
     // addClicks(&clickStats, 30);
     // printf(clickStats.currentClicks);
@@ -103,6 +107,8 @@ void cleanUpGame(GameSceneData *self)
         levels[i] = self->upgrades[i].level;
         removeUpgrades(&self->upgrades[i]);
     }
+    stopAllSpeakers();
+    UnloadSound(gsd.gameSceneMusic);
     saveLevels(&globals.save,levels);
 }
 
