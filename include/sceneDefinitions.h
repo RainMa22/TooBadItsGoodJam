@@ -12,10 +12,21 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "recordKeeper.h"
+int getSettingsValue(const char *);
 
+void initGlobals(void);
+int TitleSceneInit(void);
+int TitleSceneProcedure(void);
+int GameSceneInit(void);
+int GameSceneProcedure(void);
+int SettingSceneInit(void);
+int SettingSceneProcedure(void);
 
 #define GAMENAME "BRAINROT TYCOON"
 #define SAVEFILE_NAME "save.sav"
+
+#define MAX_SOUND_PER_SCENE 2048
+
 #define GAMEUPGRADES_ID_MAX 2
 #define GAMESCENE_EFFECTS_MAX 512
 
@@ -33,25 +44,18 @@ typedef const char *(String);
 // the collision box of mouse needs to have a size
 const char mouseCollisionSize = 1;
 
-
+#include "speaker.h"
 
 typedef struct Globals
 {
   RecordKeeper settings;
   int (*prevSceneInit)(void);
   SaveManager save;
+  Speaker speakers[MAX_SOUND_PER_SCENE];
   // etc.
 } Globals;
 
 Globals globals;
-
-void initGlobals(void);
-int TitleSceneInit(void);
-int TitleSceneProcedure(void);
-int GameSceneInit(void);
-int GameSceneProcedure(void);
-int SettingSceneInit(void);
-int SettingSceneProcedure(void);
 
 INLINE int powi(int base, int exp)
 {
@@ -71,4 +75,8 @@ Procedure procedures[3] = {TitleSceneProcedure, GameSceneProcedure, SettingScene
 #include "drawUtils.h"
 #include "button.h"
 
+int getSettingsValue(const char *key)
+{
+  return getRecordValue(&globals.settings, key);
+}
 #endif // SCENEDEFINITION_H

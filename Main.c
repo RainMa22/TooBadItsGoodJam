@@ -11,6 +11,7 @@ int screenHeight = 600;
 int main()
 {
   InitWindow(screenWidth, screenHeight, GAMENAME);
+  InitAudioDevice();
   SetTargetFPS(60);
 
   sceneID = TitleSceneInit();
@@ -18,12 +19,22 @@ int main()
   while (!WindowShouldClose())
   {
     sceneID = procedures[sceneID]();
+    for (size_t i = 0; i < MAX_SOUND_PER_SCENE; i++)
+    {
+      updateSpeaker(&globals.speakers[i]);
+    }
+    
   }
   CloseWindow();
+  CloseAudioDevice();
   return 0;
 }
 
 void initGlobals()
 {
   globals = (Globals){.settings = newSettingManager("setting.txt"), NULL, newSaveManager(SAVEFILE_NAME)};
+  for (size_t i = 0; i < MAX_SOUND_PER_SCENE; i++)
+  {
+    globals.speakers[i] = createPlaceHolderSpeaker();
+  }
 }

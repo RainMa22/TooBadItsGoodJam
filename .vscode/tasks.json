@@ -32,8 +32,7 @@
                 "-Werror",
                 // "-Wunsupported",
                 "-Wwrite-strings",
-                "-Og",
-                "-g",
+                "-Ofast",
                 "Main.c",
                 "-o",
                 "Main.exe"

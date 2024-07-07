@@ -44,7 +44,7 @@
                 "-Werror",
                 // "-Wunsupported",
                 "-Wwrite-strings",
-                "-Og",
+                "-Ofast",
                 "-run",
                 "Main.c",
             ],
