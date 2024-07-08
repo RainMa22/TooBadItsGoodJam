@@ -27,7 +27,7 @@ typedef struct GameUpgrade
     PresetLoader *loader;
 } GameUpgrade;
 
-const char *upgradeNames[2] = {(const char *)"Pyramid Scheme", (const char *)"Short Video with ADHD content"};
+const char *upgradeNames[2] = {(const char *)"Word of Mouth", (const char *)"Shorts (Video)"};
 // TODO: upgradeEvolutionNames, if evolution will be implemneted
 
 void removeUpgrades(GameUpgrade *self);
